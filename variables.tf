@@ -56,10 +56,24 @@ variable "rds_storage_encrypted" {
   
 }
 variable "rds_sg_ingress_rules" {
-  type = any
+  description = "Map of ingress rules for the RDS security group"
+  type        = map(object({
+    from_port       = number
+    to_port         = number
+    protocol        = string
+    cidr_blocks     = list(string)
+    security_groups = optional(list(string), [])
+  }))
 }
 variable "rds_sg_egress_rules" {
-  type = any
+  description = "Map of egress rules for the RDS security group"
+  type        = map(object({
+    from_port       = number
+    to_port         = number
+    protocol        = string
+    cidr_blocks     = list(string)
+    security_groups = optional(list(string), [])
+  }))
 }
 variable "vpc_id" {
   description = "The VPC ID"
